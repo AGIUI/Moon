@@ -8,7 +8,9 @@ This is a demonstration of a locally hosted server to perform data ingestion and
 2. Pip install requirements.txt in both this and the privateGPT submodule under `src/privateGPT` (after submodules are also cloned)
 3. Download the `ggml-gpt4all-j-v1.3-groovy.bin` model file from the link in the privateGPT submodule's README and place it in the `models` directory in the root of this project
 4. Create a `.env` file in project root as follows:
+
     ```
+    PERSIST_DIRECTORY=DB
     MODEL_TYPE=GPT4All
     MODEL_PATH=models/ggml-gpt4all-j-v1.3-groovy.bin
     EMBEDDINGS_MODEL_NAME=all-MiniLM-L6-v2
