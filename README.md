@@ -1,12 +1,12 @@
 # Project Moon
 
-This is a demonstration of a locally hosted server to perform data ingestion and Q&A retrieval in concert with a browser plugin/extension that calls it using a REST API. Uses privateGPT as submodule.
+This is a demonstration of a locally hosted server to perform data ingestion and Q&A retrieval in concert with a browser plugin/extension that calls it using a REST API. Uses [privateGPT](https://github.com/imartinez/privateGPT) as submodule.
 
 ## Installation
 
 1. Clone this repository with submodules: `git clone --recurse-submodules`
 2. Pip install requirements.txt in both this and the privateGPT submodule under `src/privateGPT` (after submodules are also cloned)
-3. Download the `ggml-gpt4all-j-v1.3-groovy.bin` model file from the link in the privateGPT submodule's README and place it in the `models` directory in the root of this project
+3. Download the `ggml-gpt4all-j-v1.3-groovy.bin` model file from the [privateGPT](https://github.com/imartinez/privateGPT) submodule's README and place it in the `models` directory in project root
 4. Create a `.env` file in project root as follows:
 
     ```
