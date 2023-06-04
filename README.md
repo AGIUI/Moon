@@ -23,3 +23,5 @@ This is a demonstration of a locally hosted server to perform data ingestion and
 1. Start server with `uvicorn server:app --port [port]` (leave `--port` unset for default port of 8000)
 2. Open your browser to `http://localhost:[port]/docs` and follow the Swagger instructions for REST API usage
 3. (Optional) Run the test suite in `tests/api_tests.py` to ensure everything is working as expected
+
+_(The test suite will proceed to ingest a sample document, repeatedly check its status, and then query one question against the database built from the document.)_

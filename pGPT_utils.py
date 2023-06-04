@@ -8,6 +8,7 @@ import traceback
 from pathlib import Path
 from loguru import logger
 from dotenv import load_dotenv
+from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_EXCEPTION
 
 # LangChain imports
@@ -32,6 +33,7 @@ project_path = Path(__file__).parent
 privateGPT_path = project_path / "src" / "privateGPT"
 sys.path.append(str(privateGPT_path))
 from ingest import *
+from constants import CHROMA_SETTINGS
 
 ACTIONS = ["ingest", "query", "status"]
 
@@ -140,7 +142,7 @@ def query_db(query: str, hide_source: bool = False) -> dict:
         if len(docs) > 0:
             answer += "\n\nSources:"
             for doc in docs:
-                answer += f"\n\n{document.page_content} ({document.metadata['source']})"
+                answer += f"\n\n{doc.page_content} ({doc.metadata['source']})"
         
         # Return the answer string as data to the user
         res['data'] = {'question': query, 'answer': answer}
@@ -187,7 +189,19 @@ def run(args: argparse.Namespace):
             res['message'] = f"Query string must be specified for query action"
             return res
         # This part references and re-writes parts of privateGPT.py in the privateGPT submodule because it doesn't have a separate query function we can use directly
-        return query_db(args.query, args.hide_source)
+        res = query_db(args.query, args.hide_source)
+        dt = datetime.now(timezone.utc)
+        utc_time = dt.replace(tzinfo=timezone.utc)
+        utc_timestamp = int(utc_time.timestamp())
+        additional_data = {
+            'id': str(uuid.uuid4()),
+            'created': utc_timestamp,
+        }
+        if res['data'] is None:
+            res['data'] = additional_data
+        else:
+            res['data'].update(additional_data)
+        return res
 
 def load_tasklist(tasklist_fp: str) -> dict:
     """Load tasklist"""
